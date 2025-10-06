@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="GridLoc">
+    <meta name="description" content="GridLoc - Tactical MGRS coordinate mapping and PDF generation system for military operations planning">
+    <meta name="theme-color" content="#00d9ff">
+    <title>GridLoc - MGRS Mapping System</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkdyaWRMb2MgLSBNR1JTIE1hcHBpbmcgU3lzdGVtIiwKICAic2hvcnRfbmFtZSI6ICJHcmlkTG9jIiwKICAiZGVzY3JpcHRpb24iOiAiVGFjdGljYWwgTUdSUyBjb29yZGluYXRlIG1hcHBpbmcgYW5kIFBERiBnZW5lcmF0aW9uIHRvb2wiLAogICJzdGFydF91cmwiOiAiLi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwYTBlMTQiLAogICJ0aGVtZV9jb2xvciI6ICIjMDBkOWZmIiwKICAib3JpZW50YXRpb24iOiAiYW55IiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCMmFXVjNRbTk0UFNJD05EQWdNQ0F4TURBZ01UQXdJaUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lQanhrWldaelBqeHpkSGxzWlQ0dVkzSmxjaUI3Wm1sc2JEb2dJekF3WkRsbVpqdDlQQzl6ZEhsc1pUNDhjR0YwYUNCcFpEMGljR0YwYUNJZ1pEMGlUVEV3SURFd1NEa3dWamt3U0RFd1dpSXZQanhqYVhKamJHVWdZM2c5SWpVd0lpQmplVDBpTlRBaUlISTlJalFpSUhOMGNtOXJaVDBpSXpBd1pEbG1aaUlnYzNSeWIydGxMWGRwWkhSb1BTSXlJaTgrUEd4cGJtVWdlREU5SWpVd0lpQjVNVDBpTVRBaUlIZ3lQU0kxTUNJZ2VUSTlJamt3SWlCemRISnZhMlU5SWlNd01HUTVabVlpSUhOMGNtOXJaUzEzYVdSMGFEMGlNaUl2UGp4c2FXNWxJSGd4UFNJeE1DSWdlVEU5SWpVd0lpQjRNajBpT1RBaUlIa3lQU0kxTUNJZ2MzUnliMnRsUFNJak1EQmtPV1ptSWlCemRISnZhMlV0ZDJsa2RHZzlJaklpTHo0OEwyUmxabk0rUEhKbFkzUWdlRDBpTVRBaUlIazlJakV3SWlCM2FXUjBhRDBpT0RBaUlHaGxhV2RvZEQwaU9EQWlJR1pwYkd3OUltNXZibVVpSUhOMGNtOXJaVDBpSXpBd1pEbG1aaUlnYzNSeWIydGxMWGRwWkhSb1BTSXpJaTgrUEd4cGJtVWdlREU5SWpVd0lpQjVNVDBpTVRBaUlIZ3lQU0kxTUNJZ2VUSTlJamt3SWlCemRISnZhMlU5SWlNd01HUTVabVlpSUhOMGNtOXJaUzEzYVdSMGFEMGlNaUl2UGp4c2FXNWxJSGd4UFNJeE1DSWdlVEU5SWpVd0lpQjRNajBpT1RBaUlIa3lQU0kxTUNJZ2MzUnliMnRsUFNJak1EQmtPV1ptSWlCemRISnZhMlV0ZDJsa2RHZzlJaklpTHo0OFkybHlZMnhsSUdONFBTSTFNQ0lnWTNrOUlqVXdJaUJ5UFNJNE1TSWdabWxzYkQwaWJtOXVaU0lnYzNSeWIydGxQU0lqTURCa09XWm1JaUJ6ZEhKdmEyVXRkMmxrZEdnOUlqSXVOU0l2UGp4c2FXNWxJSGd4UFNJMk1DSWdlVEU5SWpVd0lpQjRNajBpTmpBaUlIa3lQU0kxTUNJZ2MzUnliMnRsUFNJak1EQmtPV1ptSWlCemRISnZhMlV0ZDJsa2RHZzlJaklpTHo0OEwyRjJaejQ4TDNOMlp6NGlMAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiLAogICAgICAicHVycG9zZSI6ICJhbnkgbWFza2FibGUiCiAgICB9LAogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjJhV1YzUW05NFBTSXdJREFnTVRBd0lERXdNQ0lnZUcxc2JuTTlJbWgwZEhBNkx5OTNkM2N1ZHpNdWIzSm5Mekl3TURBdmMzWm5JajQ4WkdWbWN6NDhjM1I1YkdVK0xtTnlaV1FnZTJacGJHdzZJQ013TUdRNVptWTdmVHd2YzNSNWJHVStQSEJoZEdnZ2FXUTlJbkJoZEdnaUlHUTlJazB4TUNBeE1FZzVNRlk1TUVneE1Gb2lMejQ4WTJseVkyeGxJR040UFNJMk1DSWdZM2s5SWpZd0lpQnlQU0l5TUNJZ2MzUnliMnRsUFNJak1EQmtPV1ptSWlCemRISnZhMlV0ZDJsa2RHZzlJalVpTHo0OGJHbHVaU0I0TVQwaU5qQWlJSGt4UFNJeE1DSWdlREk5SWpZd0lpQjVNajBpT1RBaUlITjBjbTlyWlQwaUl6QXdaRGxtWmlJZ2MzUnliMnRsTFhkcFpIUm9QU0l6SWk4K1BHeHBibVVnZURFOUlqRXdJaUI1TVQwaU5qQWlJSGd5UFNJNU1DSWdlVEk5SWpZd0lpQnpkSEp2YTJVOUlpTXdNR1E1Wm1ZaUlITjBjbTlyWlMxM2FXUjBhRDBpTXlJdlBqd3ZaR1ZtY3o0OGNtVmpkQ0I0UFNJeE1DSWdlVDBpTVRBaUlIZHBaSFJvUFNJNE1DSWdhR1ZwWjJoMFBTSTRNQ0lnWm1sc2JEMGlibTl1WlNJZ2MzUnliMnRsUFNJak1EQmtPV1ptSWlCemRISnZhMlV0ZDJsa2RHZzlJalVpTHo0OGJHbHVaU0I0TVQwaU5qQWlJSGt4UFNJeE1DSWdlREk5SWpZd0lpQjVNajBpT1RBaUlITjBjbTlyWlQwaUl6QXdaRGxtWmlJZ2MzUnliMnRsTFhkcFpIUm9QU0l6SWk4K1BHeHBibVVnZURFOUlqRXdJaUI1TVQwaU5qQWlJSGd5UFNJNU1DSWdlVEk5SWpZd0lpQnpkSEp2YTJVOUlpTXdNR1E1Wm1ZaUlITjBjbTlyWlMxM2FXUjBhRDBpTXlJdlBqeGphWEpqYkdVZ1kzZzlJall3SWlCamVUMGlOakFpSUhJOUlqRXdJaUJtYVd4c1BTSnViMjVsSWlCemRISnZhMlU5SWlNd01HUTVabVlpSUhOMGNtOXJaUzEzYVdSMGFEMGlOQ0l2UGp4c2FXNWxJSGd4UFNJeE1DSWdlVEU5SWpVd0lpQjRNajBpTVRraUlIa3lQU0kxTUNJZ2MzUnliMnRsUFNJak1EQmtPV1ptSWlCemRISnZhMlV0ZDJsa2RHZzlJalVpTHo0OGNtVmpkQ0I0UFNJeE1DSWdlVDBpTVRBaUlIZHBaSFJvUFNJNE1DSWdhR1ZwWjJoMFBTSTRNQ0lnWm1sc2JEMGlibTl1WlNJZ2MzUnliMnRsUFNJak1EQmtPV1ptSWlCemRISnZhMlV0ZDJsa2RHZzlJalVpTHo0OGJHbHVaU0I0TVQwaU5qQWlJSGt4UFNJeE1DSWdlREk5SWpZd0lpQjVNajBpT1RBaUlITjBjbTlyWlQwaUl6QXdaRGxtWmlJZ2MzUnliMnRsTFhkcFpIUm9QU0l6SWk4K1BHeHBibVVnZURFOUlqRXdJaUI1TVQwaU5qQWlJSGd5UFNJNU1DSWdlVEk5SWpZd0lpQnpkSEp2YTJVOUlpTXdNR1E1Wm1ZaUlITjBjbTlyWlMxM2FXUjBhRDBpTXlJdlBqd3ZjM1puUGc9PSIsCiAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiLAogICAgICAicHVycG9zZSI6ICJhbnkgbWFza2FibGUiCiAgICB9CiAgXQp9">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48c3R5bGU+LmNyZWQge2ZpbGw6ICMwMGQ5ZmY7fTwvc3R5bGU+PC9kZWZzPjxyZWN0IHg9IjEwIiB5PSIxMCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMGQ5ZmYiIHN0cm9rZS13aWR0aD0iMyIvPjxsaW5lIHgxPSI1MCIgeTE9IjEwIiB4Mj0iNTAiIHkyPSI5MCIgc3Ryb2tlPSIjMDBkOWZmIiBzdHJva2Utd2lkdGg9IjIiLz48bGluZSB4MT0iMTAiIHkxPSI1MCIgeDI9IjkwIiB5Mj0iNTAiIHN0cm9rZT0iIzAwZDlmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iOCIgc3Ryb2tlPSIjMDBkOWZmIiBzdHJva2Utd2lkdGg9IjIuNSIgZmlsbD0ibm9uZSIvPjxsaW5lIHgxPSI1MCIgeTE9IjM1IiB4Mj0iNTAiIHkyPSI0MiIgc3Ryb2tlPSIjMDBkOWZmIiBzdHJva2Utd2lkdGg9IjIuNSIvPjxsaW5lIHgxPSI1MCIgeTE9IjU4IiB4Mj0iNTAiIHkyPSI2NSIgc3Ryb2tlPSIjMDBkOWZmIiBzdHJva2Utd2lkdGg9IjIuNSIvPjxsaW5lIHgxPSIzNSIgeTE9IjUwIiB4Mj0iNDIiIHkyPSI1MCIgc3Ryb2tlPSIjMDBkOWZmIiBzdHJva2Utd2lkdGg9IjIuNSIvPjxsaW5lIHgxPSI1OCIgeTE9IjUwIiB4Mj0iNjUiIHkyPSI1MCIgc3Ryb2tlPSIjMDBkOWZmIiBzdHJva2Utd2lkdGg9IjIuNSIvPjwvc3ZnPg==">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48c3R5bGU+LmNyZWQge2ZpbGw6ICMwMGQ5ZmY7fTwvc3R5bGU+PC9kZWZzPjxyZWN0IHg9IjEwIiB5PSIxMCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMGQ5ZmYiIHN0cm9rZS13aWR0aD0iMyIvPjxsaW5lIHgxPSI1MCIgeTE9IjEwIiB4Mj0iNTAiIHkyPSI5MCIgc3Ryb2tlPSIjMDBkOWZmIiBzdHJva2Utd2lkdGg9IjIiLz48bGluZSB4MT0iMTAiIHkxPSI1MCIgeDI9IjkwIiB5Mj0iNTAiIHN0cm9rZT0iIzAwZDlmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iOCIgc3Ryb2tlPSIjMDBkOWZmIiBzdHJva2Utd2lkdGg9IjIuNSIgZmlsbD0ibm9uZSIvPjxsaW5lIHgxPSI1MCIgeTE9IjM1IiB4Mj0iNTAiIHkyPSI0MiIgc3Ryb2tlPSIjMDBkOWZmIiBzdHJva2Utd2lkdGg9IjIuNSIvPjxsaW5lIHgxPSI1MCIgeTE9IjU4IiB4Mj0iNTAiIHkyPSI2NSIgc3Ryb2tlPSIjMDBkOWZmIiBzdHJva2Utd2lkdGg9IjIuNSIvPjxsaW5lIHgxPSIzNSIgeTE9IjUwIiB4Mj0iNDIiIHkyPSI1MCIgc3Ryb2tlPSIjMDBkOWZmIiBzdHJva2Utd2lkdGg9IjIuNSIvPjxsaW5lIHgxPSI1OCIgeTE9IjUwIiB4Mj0iNjUiIHkyPSI1MCIgc3Ryb2tlPSIjMDBkOWZmIiBzdHJva2Utd2lkdGg9IjIuNSIvPjwvc3ZnPg==">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="anonymous" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            background: #0a0e14;
+            color: #c5d1de;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            letter-spacing: 0.3px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f1419 0%, #1a1f26 100%);
+            padding: 18px 24px;
+            border-bottom: 1px solid #00d9ff;
+            box-shadow: 0 2px 8px rgba(0, 217, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            position: relative;
+        }
+
+        .logo svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 8px rgba(0, 217, 255, 0.4));
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 400;
+            color: #00d9ff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+        }
+
+        .header h1 .subtitle {
+            font-size: 9px;
+            color: #7a8a99;
+            letter-spacing: 2px;
+            margin-left: 12px;
+            font-weight: 300;
+        }
+
+        .controls {
+            background: #0f1419;
+            padding: 16px 24px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+            border-bottom: 1px solid #1a2332;
+            box-shadow: inset 0 1px 0 rgba(0, 217, 255, 0.05);
+        }
+
+        .mobile-search-bar {
+            display: none;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            width: 40px;
+            height: 40px;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            box-shadow: none;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: #00d9ff;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-close {
+            display: none;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .control-group label {
+            font-size: 11px;
+            color: #7a8a99;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        input[type="text"], select {
+            background: #0a0e14;
+            border: 1px solid #2a3f5f;
+            color: #c5d1de;
+            padding: 9px 14px;
+            border-radius: 2px;
+            font-size: 13px;
+            min-width: 200px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            transition: all 0.2s;
+        }
+
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: #00d9ff;
+            box-shadow: 0 0 8px rgba(0, 217, 255, 0.2);
+            background: #0f1419;
+        }
+
+        button {
+            background: linear-gradient(135deg, #006b7d 0%, #00d9ff 100%);
+            color: #0a0e14;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+            font-family: 'Consolas', 'Monaco', monospace;
+            box-shadow: 0 2px 4px rgba(0, 217, 255, 0.2);
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 217, 255, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background: #1a2332;
+            color: #4a5a6a;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .radio-option input[type="radio"] {
+            cursor: pointer;
+            accent-color: #00d9ff;
+        }
+
+        .radio-option label {
+            cursor: pointer;
+            font-size: 12px;
+            color: #c5d1de;
+        }
+
+        .map-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: #0a0e14;
+            padding: 40px;
+            overflow: auto;
+        }
+
+        .map-frame {
+            position: relative;
+            border: 1px solid #00d9ff;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.15), inset 0 0 20px rgba(0, 217, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        #map {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+        }
+
+        .grid-label-top, .grid-label-bottom {
+            position: absolute;
+            color: #00d9ff;
+            font-size: 10px;
+            font-family: 'Consolas', monospace;
+            font-weight: 600;
+            text-align: center;
+            pointer-events: none;
+            text-shadow: 0 0 4px rgba(0, 217, 255, 0.5);
+            transition: opacity 0.2s ease;
+        }
+
+        .grid-label-top {
+            top: -30px;
+            transform: translateX(-50%);
+        }
+
+        .grid-label-bottom {
+            bottom: -30px;
+            transform: translateX(-50%);
+        }
+
+        .grid-label-left, .grid-label-right {
+            position: absolute;
+            color: #00d9ff;
+            font-size: 10px;
+            font-family: 'Consolas', monospace;
+            font-weight: 600;
+            pointer-events: none;
+            text-shadow: 0 0 4px rgba(0, 217, 255, 0.5);
+            transition: opacity 0.2s ease;
+        }
+
+        .grid-label-left {
+            left: -35px;
+            transform: translateY(-50%);
+        }
+
+        .grid-label-right {
+            right: -35px;
+            transform: translateY(-50%);
+        }
+
+        .leaflet-container {
+            background: #0a0e14;
+        }
+
+        .toggle-btn {
+            background: #1a2332;
+            color: #7a8a99;
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #006b7d 0%, #00d9ff 100%);
+            color: #0a0e14;
+        }
+
+        .separator {
+            width: 1px;
+            height: 30px;
+            background: #1a2332;
+        }
+
+        .help-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #006b7d 0%, #00d9ff 100%);
+            color: #0a0e14;
+            border: 1px solid #00d9ff;
+            font-size: 22px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0, 217, 255, 0.4);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .help-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 24px rgba(0, 217, 255, 0.6);
+        }
+
+        .help-panel {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: linear-gradient(180deg, #0f1419 0%, #0a0e14 100%);
+            border-left: 1px solid #00d9ff;
+            box-shadow: -8px 0 32px rgba(0, 217, 255, 0.2);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .help-panel.open {
+            right: 0;
+        }
+
+        .help-header {
+            background: #0a0e14;
+            padding: 20px;
+            border-bottom: 1px solid #00d9ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            box-shadow: 0 2px 8px rgba(0, 217, 255, 0.1);
+        }
+
+        .help-header h2 {
+            color: #00d9ff;
+            font-size: 16px;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 400;
+            text-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+        }
+
+        .close-help {
+            background: transparent;
+            border: none;
+            color: #00d9ff;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            line-height: 1;
+            transition: all 0.2s;
+        }
+
+        .close-help:hover {
+            color: #fff;
+            background: transparent;
+            transform: rotate(90deg);
+            text-shadow: 0 0 10px rgba(0, 217, 255, 0.8);
+        }
+
+        .help-content {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .help-section {
+            margin-bottom: 25px;
+        }
+
+        .help-section h3 {
+            color: #00d9ff;
+            font-size: 13px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #1a2332;
+            padding-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 500;
+        }
+
+        .help-section p {
+            color: #8a9aa9;
+            line-height: 1.7;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+        .help-section ul {
+            color: #8a9aa9;
+            line-height: 1.9;
+            margin-left: 20px;
+            font-size: 12px;
+        }
+
+        .help-section li {
+            margin-bottom: 8px;
+        }
+
+        .help-example {
+            background: #0a0e14;
+            border-left: 2px solid #00d9ff;
+            padding: 8px 12px;
+            margin: 8px 0;
+            font-family: 'Consolas', monospace;
+            color: #00d9ff;
+            border-radius: 0;
+            font-size: 11px;
+            box-shadow: inset 0 0 10px rgba(0, 217, 255, 0.05);
+        }
+
+        .help-tip {
+            background: rgba(0, 217, 255, 0.05);
+            border-left: 2px solid #00d9ff;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 0;
+            color: #8a9aa9;
+            font-size: 11px;
+        }
+
+        .help-tip strong {
+            color: #00d9ff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 768px) {
+            .help-panel {
+                width: 100%;
+                right: -100%;
+            }
+
+            body {
+                height: 100vh;
+                height: 100dvh;
+            }
+
+            .header {
+                padding: 12px 16px;
+            }
+
+            .logo {
+                width: 24px;
+                height: 24px;
+            }
+
+            .header h1 {
+                font-size: 14px;
+                letter-spacing: 2px;
+                flex: 1;
+            }
+
+            .header h1 .subtitle {
+                display: none;
+            }
+
+            /* Show mobile search bar */
+            .mobile-search-bar {
+                display: flex;
+                background: #0f1419;
+                padding: 12px 16px;
+                border-bottom: 1px solid #1a2332;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .mobile-search-bar input {
+                flex: 1;
+                width: auto;
+                min-width: unset;
+            }
+
+            .mobile-search-bar button {
+                width: auto;
+                padding: 10px 16px;
+            }
+
+            /* Show hamburger menu */
+            .hamburger {
+                display: flex;
+            }
+
+            /* Hide desktop controls, show them when menu is open */
+            .controls {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: 100vh;
+                flex-direction: column;
+                align-items: stretch;
+                padding: 60px 20px 20px 20px;
+                gap: 20px;
+                z-index: 2000;
+                overflow-y: auto;
+                transition: left 0.3s ease;
+                background: #0f1419;
+                border-right: 1px solid #00d9ff;
+                box-shadow: 4px 0 16px rgba(0, 217, 255, 0.2);
+            }
+
+            .controls.open {
+                left: 0;
+            }
+
+            /* Close button in mobile menu */
+            .mobile-menu-close {
+                display: none;
+            }
+
+            .controls .mobile-menu-close {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: transparent;
+                border: none;
+                font-size: 32px;
+                color: #00d9ff;
+                cursor: pointer;
+                width: 40px;
+                height: 40px;
+                padding: 0;
+                line-height: 1;
+                box-shadow: none;
+                z-index: 10;
+                transition: all 0.2s;
+            }
+
+            .controls .mobile-menu-close:hover {
+                color: #fff;
+                background: transparent;
+                transform: rotate(90deg);
+                text-shadow: 0 0 10px rgba(0, 217, 255, 0.8);
+            }
+
+            /* Hide the search control group (first one) in mobile menu */
+            .controls > .control-group:nth-child(2) {
+                display: none !important;
+            }
+
+            .control-group {
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                display: flex !important;
+            }
+
+            .control-group label {
+                width: 100%;
+                font-size: 10px;
+                margin-bottom: 0;
+            }
+
+            input[type="text"], select {
+                width: 100%;
+                min-width: unset;
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            button {
+                width: 100%;
+                padding: 12px;
+                font-size: 13px;
+            }
+
+            .radio-group {
+                width: 100%;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .radio-option {
+                width: 100%;
+            }
+
+            .radio-option label {
+                font-size: 12px;
+            }
+
+            .separator {
+                width: 100%;
+                height: 1px;
+                background: #1a2332;
+            }
+
+            .map-container {
+                padding: 15px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .map-frame {
+                border-width: 1px;
+                width: 100%;
+                max-width: 100%;
+                margin: 0 auto;
+            }
+
+            .grid-label-top, .grid-label-bottom {
+                font-size: 9px;
+            }
+
+            .grid-label-top {
+                top: -25px;
+            }
+
+            .grid-label-bottom {
+                bottom: -25px;
+            }
+
+            .grid-label-left {
+                left: -30px;
+                font-size: 9px;
+            }
+
+            .grid-label-right {
+                right: -30px;
+                font-size: 9px;
+            }
+
+            .help-button {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .help-content {
+                padding: 15px;
+            }
+
+            .help-section {
+                margin-bottom: 20px;
+            }
+
+            .help-section h3 {
+                font-size: 12px;
+            }
+
+            .help-section p, .help-section ul {
+                font-size: 11px;
+            }
+
+            .help-example {
+                font-size: 10px;
+                padding: 6px 10px;
+            }
+
+            .leaflet-control-zoom a {
+                width: 36px !important;
+                height: 36px !important;
+                line-height: 36px !important;
+                font-size: 20px !important;
+            }
+
+            .map-container {
+                flex: 1;
+                min-height: 0;
+            }
+        }
+
+        /* Landscape mobile/small tablets - keep mobile UI */
+        @media (max-width: 1024px) and (max-height: 768px) and (orientation: landscape) {
+            .hamburger {
+                display: flex;
+            }
+
+            .mobile-search-bar {
+                display: flex;
+                background: #0f1419;
+                padding: 8px 16px;
+                border-bottom: 1px solid #1a2332;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .mobile-search-bar input {
+                flex: 1;
+            }
+
+            .mobile-search-bar button {
+                width: auto;
+                padding: 8px 14px;
+            }
+
+            .controls {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 95%;
+                max-width: none;
+                height: 100vh;
+                flex-direction: column;
+                align-items: stretch;
+                padding: 60px 20px 20px 20px;
+                gap: 15px;
+                z-index: 2000;
+                overflow-y: auto;
+                transition: left 0.3s ease;
+                background: #0f1419;
+                border-right: 1px solid #00d9ff;
+                box-shadow: 4px 0 16px rgba(0, 217, 255, 0.2);
+            }
+
+            .controls.open {
+                left: 0;
+            }
+
+            .controls .mobile-menu-close {
+                display: flex !important;
+            }
+
+            .controls > .control-group:nth-child(2) {
+                display: none !important;
+            }
+
+            .header {
+                padding: 10px 16px;
+            }
+
+            .header h1 {
+                font-size: 13px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .controls {
+                gap: 15px;
+            }
+
+            .control-group {
+                flex: 1 1 auto;
+            }
+
+            input[type="text"] {
+                min-width: 180px;
+            }
+
+            .map-container {
+                padding: 30px;
+            }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            button, .radio-option, select, input[type="text"] {
+                min-height: 44px;
+            }
+
+            .radio-option input[type="radio"] {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="logo">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="10" width="80" height="80" fill="none" stroke="#00d9ff" stroke-width="3"/>
+                <line x1="50" y1="10" x2="50" y2="90" stroke="#00d9ff" stroke-width="2" opacity="0.6"/>
+                <line x1="10" y1="50" x2="90" y2="50" stroke="#00d9ff" stroke-width="2" opacity="0.6"/>
+                <circle cx="50" cy="50" r="8" fill="none" stroke="#00d9ff" stroke-width="2.5"/>
+                <line x1="50" y1="35" x2="50" y2="42" stroke="#00d9ff" stroke-width="2.5"/>
+                <line x1="50" y1="58" x2="50" y2="65" stroke="#00d9ff" stroke-width="2.5"/>
+                <line x1="35" y1="50" x2="42" y2="50" stroke="#00d9ff" stroke-width="2.5"/>
+                <line x1="58" y1="50" x2="65" y2="50" stroke="#00d9ff" stroke-width="2.5"/>
+                <line x1="10" y1="10" x2="20" y2="10" stroke="#00d9ff" stroke-width="3"/>
+                <line x1="10" y1="10" x2="10" y2="20" stroke="#00d9ff" stroke-width="3"/>
+                <line x1="90" y1="10" x2="80" y2="10" stroke="#00d9ff" stroke-width="3"/>
+                <line x1="90" y1="10" x2="90" y2="20" stroke="#00d9ff" stroke-width="3"/>
+                <line x1="10" y1="90" x2="20" y2="90" stroke="#00d9ff" stroke-width="3"/>
+                <line x1="10" y1="90" x2="10" y2="80" stroke="#00d9ff" stroke-width="3"/>
+                <line x1="90" y1="90" x2="80" y2="90" stroke="#00d9ff" stroke-width="3"/>
+                <line x1="90" y1="90" x2="90" y2="80" stroke="#00d9ff" stroke-width="3"/>
+            </svg>
+        </div>
+        <h1>GridLoc <span class="subtitle">MGRS MAPPING SYSTEM</span></h1>
+    </div>
+
+    <div class="mobile-search-bar">
+        <input type="text" id="mobileSearchInput" placeholder="Search location..." onkeypress="if(event.key==='Enter') searchLocationMobile()" maxlength="200">
+        <button onclick="searchLocationMobile()">Go</button>
+    </div>
+
+    <div class="controls" id="mobileControls">
+        <button class="mobile-menu-close" onclick="toggleMobileMenu()">&times;</button>
+
+        <div class="control-group">
+            <input type="text" id="searchInput" placeholder="Search: City name, MGRS, or Lat/Long (e.g., Babadag Romania)" onkeypress="if(event.key==='Enter') searchLocation()" maxlength="200">
+            <button onclick="searchLocation()">Search</button>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="control-group">
+            <label>Map Type:</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="satellite" name="mapType" value="satellite">
+                    <label for="satellite">Satellite</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="terrain" name="mapType" value="terrain" checked>
+                    <label for="terrain">Terrain</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="control-group">
+            <label>Scale:</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="scale100k" name="scale" value="100000">
+                    <label for="scale100k">1:100k</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="scale50k" name="scale" value="50000" checked>
+                    <label for="scale50k">1:50k</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="scale25k" name="scale" value="25000">
+                    <label for="scale25k">1:25k</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="control-group">
+            <button class="toggle-btn active" id="gridToggle" onclick="toggleGrid()">MGRS Grid: ON</button>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="control-group">
+            <label>Paper Size:</label>
+            <select id="paperSize">
+                <option value="letter">8.5" x 11"</option>
+                <option value="tabloid">11" x 17"</option>
+                <option value="arch-d">24" x 36"</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label>Map Orientation:</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="portrait" name="pdfOrientation" value="portrait">
+                    <label for="portrait">Portrait</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="landscape" name="pdfOrientation" value="landscape" checked>
+                    <label for="landscape">Landscape</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <button onclick="generatePDF()">Create Map</button>
+        </div>
+    </div>
+
+    <div class="map-container">
+        <div class="map-frame" id="mapFrame">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <button class="help-button" onclick="toggleHelp()" title="Getting Started">?</button>
+
+    <div class="help-panel" id="helpPanel">
+        <div class="help-header">
+            <h2>Getting Started</h2>
+            <button class="close-help" onclick="toggleHelp()">&times;</button>
+        </div>
+        <div class="help-content">
+            <div class="help-section">
+                <h3>📍 Quick Start</h3>
+                <p>Create professional MGRS (Military Grid Reference System) maps for printing. Follow these steps:</p>
+                <ul>
+                    <li><strong>Navigate:</strong> Pan by clicking and dragging, zoom with mouse wheel</li>
+                    <li><strong>Search:</strong> Enter coordinates to jump to a location</li>
+                    <li><strong>Adjust scale:</strong> Choose 1:25k, 1:50k, or 1:100k</li>
+                    <li><strong>Create PDF:</strong> Click "Create Map" to export</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3>🔍 Searching for Locations</h3>
+                <p>You can search using three formats:</p>
+
+                <p><strong>Place Names:</strong></p>
+                <div class="help-example">Babadag, Romania</div>
+                <div class="help-example">Caracas, Venezuela</div>
+                <div class="help-example">Mount Rainier</div>
+
+                <p><strong>MGRS Format:</strong></p>
+                <div class="help-example">18SUJ 23 06</div>
+                <div class="help-example">18S UJ 15999 08500</div>
+
+                <p><strong>Latitude/Longitude:</strong></p>
+                <div class="help-example">38.9072, -77.0369</div>
+                <div class="help-example">40.7128, -74.0060</div>
+            </div>
+
+            <div class="help-section">
+                <h3>📏 Understanding Scale</h3>
+                <ul>
+                    <li><strong>1:25,000</strong> - Most detailed (1km = 4cm on paper)</li>
+                    <li><strong>1:50,000</strong> - Standard detail (1km = 2cm on paper)</li>
+                    <li><strong>1:100,000</strong> - Wide area view (1km = 1cm on paper)</li>
+                </ul>
+                <div class="help-tip">
+                    <strong>Tip:</strong> Use 1:25k for hiking/detailed work, 1:50k for general planning, 1:100k for overview maps.
+                </div>
+            </div>
+
+            <div class="help-section">
+                <h3>🗺️ Map Controls</h3>
+                <ul>
+                    <li><strong>Map Type:</strong> Switch between Satellite and Terrain views</li>
+                    <li><strong>MGRS Grid:</strong> Toggle the 1km grid overlay on/off</li>
+                    <li><strong>Paper Size:</strong> Choose Letter, Tabloid, or Arch-D</li>
+                    <li><strong>Orientation:</strong> Select Portrait or Landscape layout</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3>📄 Creating Your PDF</h3>
+                <p>Your exported PDF will include:</p>
+                <ul>
+                    <li>Map at correct scale with MGRS grid</li>
+                    <li>Grid coordinate labels on all edges</li>
+                    <li>Header with MGRS center coordinate</li>
+                    <li>Footer with scale, datum, date, and declination</li>
+                </ul>
+                <div class="help-tip">
+                    <strong>Tip:</strong> The viewer shows exactly what will be printed. Adjust the view until you see the area you want!
+                </div>
+            </div>
+
+            <div class="help-section">
+                <h3>❓ What is MGRS?</h3>
+                <p>MGRS (Military Grid Reference System) is a geocoordinate standard used by NATO militaries for locating points on Earth. It divides the world into grid zones and uses a series of letters and numbers to pinpoint locations with precision.</p>
+                <p>The 1km grid overlay helps you measure distances and navigate using the coordinate system.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js" crossorigin="anonymous"></script>
+
+    <script>
+        let myMap, satelliteLayer, terrainLayer, myGridLayer;
+        let isGridVisible = true;
+        let currentMapScale = 50000;
+        let gridRenderTimeout;
+
+        function initMap() {
+            myMap = L.map('map', {
+                center: [38.9072, -77.0369],
+                zoom: 13,
+                zoomControl: true
+            });
+
+            satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Esri, DigitalGlobe, GeoEye',
+                maxZoom: 18
+            });
+
+            terrainLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                attribution: 'OpenTopoMap',
+                maxZoom: 17
+            }).addTo(myMap);
+
+            myGridLayer = L.layerGroup().addTo(myMap);
+
+            myMap.on('moveend zoomend', () => {
+                if (isGridVisible) {
+                    clearTimeout(gridRenderTimeout);
+                    gridRenderTimeout = setTimeout(renderMGRSGrid, 150);
+                }
+            });
+
+            myMap.on('movestart', () => {
+                if (isGridVisible) {
+                    const mapFrame = document.getElementById('mapFrame');
+                    const existingLabels = mapFrame.querySelectorAll('.grid-label-top, .grid-label-bottom, .grid-label-left, .grid-label-right');
+                    existingLabels.forEach(label => label.style.opacity = '0');
+                }
+            });
+
+            document.querySelectorAll('input[name="mapType"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'satellite') {
+                        myMap.removeLayer(terrainLayer);
+                        myMap.addLayer(satelliteLayer);
+                    } else {
+                        myMap.removeLayer(satelliteLayer);
+                        myMap.addLayer(terrainLayer);
+                    }
+                });
+            });
+
+            document.querySelectorAll('input[name="scale"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    currentMapScale = parseInt(this.value);
+                    adjustZoomForScale();
+                });
+            });
+
+            document.getElementById('paperSize').addEventListener('change', resizeMapToPageRatio);
+            document.querySelectorAll('input[name="pdfOrientation"]').forEach(radio => {
+                radio.addEventListener('change', resizeMapToPageRatio);
+            });
+
+            setTimeout(() => {
+                resizeMapToPageRatio();
+                renderMGRSGrid();
+            }, 100);
+        }
+
+        function resizeMapToPageRatio() {
+            const paperSize = document.getElementById('paperSize').value;
+            const orientation = document.querySelector('input[name="pdfOrientation"]:checked').value;
+
+            let pageWidth, pageHeight;
+            switch(paperSize) {
+                case 'letter':
+                    pageWidth = orientation === 'portrait' ? 8.5 : 11;
+                    pageHeight = orientation === 'portrait' ? 11 : 8.5;
+                    break;
+                case 'tabloid':
+                    pageWidth = orientation === 'portrait' ? 11 : 17;
+                    pageHeight = orientation === 'portrait' ? 17 : 11;
+                    break;
+                case 'arch-d':
+                    pageWidth = orientation === 'portrait' ? 24 : 36;
+                    pageHeight = orientation === 'portrait' ? 36 : 24;
+                    break;
+            }
+
+            const headerHeight = 1.0;
+            const footerHeight = 1.5;
+            const sideMargin = 1.0;
+
+            const usableWidth = pageWidth - (2 * sideMargin);
+            const usableHeight = pageHeight - headerHeight - footerHeight;
+
+            const DPI = 96;
+            const newWidth = usableWidth * DPI;
+            const newHeight = usableHeight * DPI;
+
+            const mapFrame = document.getElementById('mapFrame');
+            mapFrame.style.width = Math.floor(newWidth) + 'px';
+            mapFrame.style.height = Math.floor(newHeight) + 'px';
+            mapFrame.style.margin = 'auto';
+            mapFrame.style.flexShrink = '0';
+
+            setTimeout(() => {
+                myMap.invalidateSize();
+                renderMGRSGrid();
+            }, 100);
+        }
+
+        function adjustZoomForScale() {
+            const center = myMap.getCenter();
+            let zoom;
+
+            switch(currentMapScale) {
+                case 25000: zoom = 14; break;
+                case 50000: zoom = 13; break;
+                case 100000: zoom = 12; break;
+                default: zoom = 13;
+            }
+
+            myMap.setView(center, zoom);
+        }
+
+        function latLonToMGRS(lat, lon) {
+            const zone = Math.floor((lon + 180) / 6) + 1;
+            const latBand = getLatitudeBand(lat);
+            const utmCoords = latLonToUTM(lat, lon, zone);
+            const gridSquare = getGridSquare(utmCoords.easting, utmCoords.northing, zone);
+
+            const e = Math.floor(utmCoords.easting % 100000).toString().padStart(5, '0');
+            const n = Math.floor(utmCoords.northing % 100000).toString().padStart(5, '0');
+
+            return `${zone}${latBand} ${gridSquare} ${e} ${n}`;
+        }
+
+        function mgrsToLatLon(mgrs) {
+            mgrs = mgrs.replace(/\s+/g, '');
+            const zoneMatch = mgrs.match(/^(\d{1,2})([A-Z])/);
+            if (!zoneMatch) return null;
+
+            const zone = parseInt(zoneMatch[1]);
+            const latBand = zoneMatch[2];
+            let remaining = mgrs.substring(zoneMatch[0].length);
+            const gridSquare = remaining.substring(0, 2);
+            remaining = remaining.substring(2);
+
+            const halfLen = Math.floor(remaining.length / 2);
+            let easting = remaining.substring(0, halfLen).padEnd(5, '0');
+            let northing = remaining.substring(halfLen).padEnd(5, '0');
+
+            const baseCoords = getGridSquareCoords(gridSquare, zone);
+            const fullEasting = baseCoords.easting + parseInt(easting);
+            const fullNorthing = baseCoords.northing + parseInt(northing);
+
+            return utmToLatLon(fullEasting, fullNorthing, zone, latBand);
+        }
+
+        function latLonToUTM(lat, lon, zone) {
+            const a = 6378137;
+            const e = 0.081819190842622;
+            const k0 = 0.9996;
+
+            const latRad = lat * Math.PI / 180;
+            const lonRad = lon * Math.PI / 180;
+            const lonOrigin = ((zone - 1) * 6 - 180 + 3) * Math.PI / 180;
+
+            const N = a / Math.sqrt(1 - e * e * Math.sin(latRad) * Math.sin(latRad));
+            const T = Math.tan(latRad) * Math.tan(latRad);
+            const C = (e * e / (1 - e * e)) * Math.cos(latRad) * Math.cos(latRad);
+            const A = (lonRad - lonOrigin) * Math.cos(latRad);
+
+            const M = a * ((1 - e * e / 4 - 3 * e * e * e * e / 64) * latRad -
+                          (3 * e * e / 8 + 3 * e * e * e * e / 32) * Math.sin(2 * latRad) +
+                          (15 * e * e * e * e / 256) * Math.sin(4 * latRad));
+
+            const easting = k0 * N * (A + (1 - T + C) * A * A * A / 6) + 500000;
+            const northing = k0 * (M + N * Math.tan(latRad) * (A * A / 2 + (5 - T + 9 * C + 4 * C * C) * A * A * A * A / 24));
+
+            return {
+                easting: easting,
+                northing: northing < 0 ? northing + 10000000 : northing
+            };
+        }
+
+        function utmToLatLon(easting, northing, zone, latBand) {
+            const a = 6378137;
+            const e = 0.081819190842622;
+            const e2 = e * e;
+            const k0 = 0.9996;
+
+            const x = easting - 500000;
+            const y = latBand < 'N' ? northing - 10000000 : northing;
+
+            const M = y / k0;
+            const mu = M / (a * (1 - e2 / 4 - 3 * e2 * e2 / 64 - 5 * e2 * e2 * e2 / 256));
+
+            const e1 = (1 - Math.sqrt(1 - e2)) / (1 + Math.sqrt(1 - e2));
+
+            const phi1 = mu + (3 * e1 / 2 - 27 * e1 * e1 * e1 / 32) * Math.sin(2 * mu) +
+                         (21 * e1 * e1 / 16 - 55 * e1 * e1 * e1 * e1 / 32) * Math.sin(4 * mu) +
+                         (151 * e1 * e1 * e1 / 96) * Math.sin(6 * mu) +
+                         (1097 * e1 * e1 * e1 * e1 / 512) * Math.sin(8 * mu);
+
+            const C1 = e2 / (1 - e2) * Math.cos(phi1) * Math.cos(phi1);
+            const T1 = Math.tan(phi1) * Math.tan(phi1);
+            const N1 = a / Math.sqrt(1 - e2 * Math.sin(phi1) * Math.sin(phi1));
+            const R1 = a * (1 - e2) / Math.pow(1 - e2 * Math.sin(phi1) * Math.sin(phi1), 1.5);
+            const D = x / (N1 * k0);
+
+            const lat = phi1 - (N1 * Math.tan(phi1) / R1) *
+                       (D * D / 2 - (5 + 3 * T1 + 10 * C1 - 4 * C1 * C1 - 9 * e2 / (1 - e2)) * D * D * D * D / 24 +
+                       (61 + 90 * T1 + 298 * C1 + 45 * T1 * T1 - 252 * e2 / (1 - e2) - 3 * C1 * C1) * D * D * D * D * D * D / 720);
+
+            const lon = (D - (1 + 2 * T1 + C1) * D * D * D / 6 +
+                        (5 - 2 * C1 + 28 * T1 - 3 * C1 * C1 + 8 * e2 / (1 - e2) + 24 * T1 * T1) * D * D * D * D * D / 120) / Math.cos(phi1);
+
+            const centralMeridian = (zone - 1) * 6 - 180 + 3;
+
+            return {
+                lat: lat * 180 / Math.PI,
+                lon: centralMeridian + lon * 180 / Math.PI
+            };
+        }
+
+        function getLatitudeBand(lat) {
+            const bands = 'CDEFGHJKLMNPQRSTUVWXX';
+            const index = Math.floor((lat + 80) / 8);
+            return bands[Math.max(0, Math.min(index, bands.length - 1))];
+        }
+
+        function getGridSquare(easting, northing, zone) {
+            const e100k = Math.floor(easting / 100000);
+            const n100k = Math.floor(northing / 100000);
+
+            const colLetters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+            const rowLetters = 'ABCDEFGHJKLMNPQRSTUV';
+
+            const setCol = ((zone - 1) % 3) * 8;
+            const colIndex = (setCol + e100k - 1) % 24;
+            const col = colLetters[colIndex];
+
+            const isOddZone = zone % 2 === 1;
+            const rowOffset = isOddZone ? 0 : 5;
+            const rowIndex = (n100k + rowOffset) % 20;
+            const row = rowLetters[rowIndex];
+
+            return col + row;
+        }
+
+        function getGridSquareCoords(gridSquare, zone) {
+            const colLetters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+            const rowLetters = 'ABCDEFGHJKLMNPQRSTUV';
+
+            const setColumn = ((zone - 1) % 3) * 8;
+            const col = (colLetters.indexOf(gridSquare[0]) - setColumn + 24) % 24;
+            const row = rowLetters.indexOf(gridSquare[1]);
+
+            return {
+                easting: (col + 1) * 100000,
+                northing: row * 100000
+            };
+        }
+
+        function renderMGRSGrid() {
+            if (!isGridVisible || !myGridLayer) return;
+
+            myGridLayer.clearLayers();
+
+            const mapFrame = document.getElementById('mapFrame');
+            const existingLabels = mapFrame.querySelectorAll('.grid-label-top, .grid-label-bottom, .grid-label-left, .grid-label-right');
+            existingLabels.forEach(label => label.remove());
+
+            const bounds = myMap.getBounds();
+            const center = myMap.getCenter();
+            const zone = Math.floor((center.lng + 180) / 6) + 1;
+            const latBand = getLatitudeBand(center.lat);
+
+            const nw = bounds.getNorthWest();
+            const se = bounds.getSouthEast();
+            const ne = bounds.getNorthEast();
+            const sw = bounds.getSouthWest();
+
+            const nwUTM = latLonToUTM(nw.lat, nw.lng, zone);
+            const seUTM = latLonToUTM(se.lat, se.lng, zone);
+            const neUTM = latLonToUTM(ne.lat, ne.lng, zone);
+            const swUTM = latLonToUTM(sw.lat, sw.lng, zone);
+
+            const gridSize = 1000;
+
+            const allEastings = [nwUTM.easting, seUTM.easting, neUTM.easting, swUTM.easting];
+            const allNorthings = [nwUTM.northing, seUTM.northing, neUTM.northing, swUTM.northing];
+
+            const minE = Math.floor(Math.min(...allEastings) / gridSize) * gridSize;
+            const maxE = Math.ceil(Math.max(...allEastings) / gridSize) * gridSize;
+            const minN = Math.floor(Math.min(...allNorthings) / gridSize) * gridSize;
+            const maxN = Math.ceil(Math.max(...allNorthings) / gridSize) * gridSize;
+
+            const gridStyle = {
+                color: '#666666',
+                weight: 1,
+                opacity: 0.6
+            };
+
+            for (let e = minE; e <= maxE; e += gridSize) {
+                const points = [];
+                for (let n = minN; n <= maxN; n += gridSize / 20) {
+                    const coords = utmToLatLon(e, n, zone, latBand);
+                    points.push([coords.lat, coords.lon]);
+                }
+                if (points.length > 1) {
+                    L.polyline(points, gridStyle).addTo(myGridLayer);
+                }
+            }
+
+            for (let n = minN; n <= maxN; n += gridSize) {
+                const points = [];
+                for (let e = minE; e <= maxE; e += gridSize / 20) {
+                    const coords = utmToLatLon(e, n, zone, latBand);
+                    points.push([coords.lat, coords.lon]);
+                }
+                if (points.length > 1) {
+                    L.polyline(points, gridStyle).addTo(myGridLayer);
+                }
+            }
+
+            // Use requestAnimationFrame to batch label rendering
+            requestAnimationFrame(() => {
+                for (let e = minE; e <= maxE; e += gridSize) {
+                    const coords = utmToLatLon(e, maxN, zone, latBand);
+                    const point = myMap.latLngToContainerPoint([coords.lat, coords.lon]);
+                    const mgrs = latLonToMGRS(coords.lat, coords.lon);
+                    const parts = mgrs.split(' ');
+                    const label = parts[2].substring(0, 2);
+
+                    const labelDiv = document.createElement('div');
+                    labelDiv.className = 'grid-label-top';
+                    labelDiv.textContent = label;
+                    labelDiv.style.left = point.x + 'px';
+                    labelDiv.style.opacity = '1';
+                    mapFrame.appendChild(labelDiv);
+                }
+
+                for (let e = minE; e <= maxE; e += gridSize) {
+                    const coords = utmToLatLon(e, minN, zone, latBand);
+                    const point = myMap.latLngToContainerPoint([coords.lat, coords.lon]);
+                    const mgrs = latLonToMGRS(coords.lat, coords.lon);
+                    const parts = mgrs.split(' ');
+                    const label = parts[2].substring(0, 2);
+
+                    const labelDiv = document.createElement('div');
+                    labelDiv.className = 'grid-label-bottom';
+                    labelDiv.textContent = label;
+                    labelDiv.style.left = point.x + 'px';
+                    labelDiv.style.opacity = '1';
+                    mapFrame.appendChild(labelDiv);
+                }
+
+                for (let n = minN; n <= maxN; n += gridSize) {
+                    const coords = utmToLatLon(minE, n, zone, latBand);
+                    const point = myMap.latLngToContainerPoint([coords.lat, coords.lon]);
+                    const mgrs = latLonToMGRS(coords.lat, coords.lon);
+                    const parts = mgrs.split(' ');
+                    const label = parts[3].substring(0, 2);
+
+                    const labelDiv = document.createElement('div');
+                    labelDiv.className = 'grid-label-left';
+                    labelDiv.textContent = label;
+                    labelDiv.style.top = point.y + 'px';
+                    labelDiv.style.opacity = '1';
+                    mapFrame.appendChild(labelDiv);
+                }
+
+                for (let n = minN; n <= maxN; n += gridSize) {
+                    const coords = utmToLatLon(maxE, n, zone, latBand);
+                    const point = myMap.latLngToContainerPoint([coords.lat, coords.lon]);
+                    const mgrs = latLonToMGRS(coords.lat, coords.lon);
+                    const parts = mgrs.split(' ');
+                    const label = parts[3].substring(0, 2);
+
+                    const labelDiv = document.createElement('div');
+                    labelDiv.className = 'grid-label-right';
+                    labelDiv.textContent = label;
+                    labelDiv.style.top = point.y + 'px';
+                    labelDiv.style.opacity = '1';
+                    mapFrame.appendChild(labelDiv);
+                }
+            });
+        }
+
+        function toggleGrid() {
+            isGridVisible = !isGridVisible;
+            const btn = document.getElementById('gridToggle');
+
+            if (isGridVisible) {
+                btn.classList.add('active');
+                btn.textContent = 'MGRS Grid: ON';
+                renderMGRSGrid();
+            } else {
+                btn.classList.remove('active');
+                btn.textContent = 'MGRS Grid: OFF';
+                if (myGridLayer) {
+                    myGridLayer.clearLayers();
+                }
+                const mapFrame = document.getElementById('mapFrame');
+                const existingLabels = mapFrame.querySelectorAll('.grid-label-top, .grid-label-bottom, .grid-label-left, .grid-label-right');
+                existingLabels.forEach(label => label.remove());
+            }
+        }
+
+        function toggleHelp() {
+            const helpPanel = document.getElementById('helpPanel');
+            helpPanel.classList.toggle('open');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.controls');
+            const hamburger = document.getElementById('hamburger');
+            menu.classList.toggle('open');
+            hamburger.classList.toggle('active');
+        }
+
+        function searchLocationMobile() {
+            const input = document.getElementById('mobileSearchInput').value;
+            document.getElementById('searchInput').value = input;
+            searchLocation();
+        }
+
+        async function searchLocation() {
+            const input = document.getElementById('searchInput').value.trim();
+            if (!input) {
+                alert('Please enter a location');
+                return;
+            }
+
+            if (input.length > 200) {
+                alert('Search input too long. Please use 200 characters or less.');
+                return;
+            }
+
+            const crosshairIcon = L.divIcon({
+                className: 'custom-crosshair',
+                html: '<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><line x1="20" y1="5" x2="20" y2="15" stroke="red" stroke-width="2"/><line x1="20" y1="25" x2="20" y2="35" stroke="red" stroke-width="2"/><line x1="5" y1="20" x2="15" y2="20" stroke="red" stroke-width="2"/><line x1="25" y1="20" x2="35" y2="20" stroke="red" stroke-width="2"/></svg>',
+                iconSize: [40, 40],
+                iconAnchor: [20, 20]
+            });
+
+            const latLonMatch = input.match(/([-\d.]+)[,\s]+([-\d.]+)/);
+            if (latLonMatch) {
+                const lat = parseFloat(latLonMatch[1]);
+                const lon = parseFloat(latLonMatch[2]);
+                if (lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) {
+                    myMap.setView([lat, lon], myMap.getZoom());
+                    L.marker([lat, lon], {icon: crosshairIcon}).addTo(myMap).bindPopup(`${lat.toFixed(5)}, ${lon.toFixed(5)}`).openPopup();
+                    return;
+                }
+            }
+
+            try {
+                const coords = mgrsToLatLon(input);
+                if (coords) {
+                    myMap.setView([coords.lat, coords.lon], myMap.getZoom());
+                    L.marker([coords.lat, coords.lon], {icon: crosshairIcon}).addTo(myMap).bindPopup(`MGRS: ${input}`).openPopup();
+                    return;
+                }
+            } catch (error) {
+                console.log('MGRS parsing failed, trying geocoding...', error);
+            }
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(input)}&format=json&limit=1`, {
+                    headers: {
+                        'User-Agent': 'GridLoc MGRS Mapping System'
+                    },
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const results = await response.json();
+
+                if (results && results.length > 0) {
+                    const lat = parseFloat(results[0].lat);
+                    const lon = parseFloat(results[0].lon);
+                    const placeName = results[0].display_name;
+
+                    if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+                        throw new Error('Invalid coordinates returned from geocoding service');
+                    }
+
+                    myMap.setView([lat, lon], 13);
+                    L.marker([lat, lon], {icon: crosshairIcon}).addTo(myMap).bindPopup(`${placeName}<br>${lat.toFixed(5)}, ${lon.toFixed(5)}`).openPopup();
+                } else {
+                    alert('Location not found. Try:\n- City name (e.g., "Paris, France")\n- MGRS (e.g., "18SUJ 23 06")\n- Lat/Long (e.g., "40.7128, -74.0060")');
+                }
+            } catch (error) {
+                console.error('Geocoding error:', error);
+                if (error.name === 'AbortError') {
+                    alert('Search timed out. Please check your internet connection and try again.');
+                } else {
+                    alert('Error searching for location. Please check your internet connection and try again.');
+                }
+            }
+        }
+
+        function getMagneticDeclination(lat, lon) {
+            const decl = Math.sin(lat * Math.PI / 180) * Math.cos(lon * Math.PI / 180) * 15 - 5;
+            return decl.toFixed(1);
+        }
+
+        async function generatePDF() {
+            // Check if on mobile and warn user
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (isMobile) {
+                const proceed = confirm('PDF generation on mobile devices may be slow or fail due to memory limitations. It is recommended to use a desktop computer for best results.\n\nDo you want to continue anyway?');
+                if (!proceed) return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            const paperSize = document.getElementById('paperSize').value;
+            const pdfOrientation = document.querySelector('input[name="pdfOrientation"]:checked').value;
+
+            let width, height;
+            switch(paperSize) {
+                case 'letter':
+                    width = pdfOrientation === 'portrait' ? 8.5 : 11;
+                    height = pdfOrientation === 'portrait' ? 11 : 8.5;
+                    break;
+                case 'tabloid':
+                    width = pdfOrientation === 'portrait' ? 11 : 17;
+                    height = pdfOrientation === 'portrait' ? 17 : 11;
+                    break;
+                case 'arch-d':
+                    width = pdfOrientation === 'portrait' ? 24 : 36;
+                    height = pdfOrientation === 'portrait' ? 36 : 24;
+                    break;
+            }
+
+            const btn = document.querySelector('button[onclick="generatePDF()"]');
+            const originalText = btn.textContent;
+            btn.textContent = 'Generating PDF...';
+            btn.disabled = true;
+
+            try {
+                const mapElement = document.getElementById('map');
+                const mapWidth = mapElement.offsetWidth;
+                const mapHeight = mapElement.offsetHeight;
+
+                if (!mapWidth || !mapHeight || mapWidth <= 0 || mapHeight <= 0) {
+                    throw new Error('Invalid map dimensions. Please refresh the page and try again.');
+                }
+
+                const zoomControl = document.querySelector('.leaflet-control-zoom');
+                if (zoomControl) zoomControl.style.display = 'none';
+
+                const markers = document.querySelectorAll('.leaflet-marker-pane');
+                markers.forEach(marker => marker.style.display = 'none');
+
+                // Check which dom-to-image variable is available
+                const domToImageLib = window.domtoimage || window.domToImage;
+
+                if (!domToImageLib) {
+                    throw new Error('PDF generation library failed to load. Please refresh the page and try again.');
+                }
+
+                const dataUrl = await domToImageLib.toJpeg(mapElement, {
+                    quality: 0.95,
+                    bgcolor: '#1a1a1a',
+                    width: mapWidth,
+                    height: mapHeight
+                });
+
+                if (zoomControl) zoomControl.style.display = 'block';
+                markers.forEach(marker => marker.style.display = 'block');
+
+                if (!dataUrl || !dataUrl.startsWith('data:image')) {
+                    throw new Error('Failed to capture map image. Please try again.');
+                }
+
+                const center = myMap.getCenter();
+
+                if (!center || isNaN(center.lat) || isNaN(center.lng)) {
+                    throw new Error('Invalid map center coordinates.');
+                }
+
+                const mgrs = latLonToMGRS(center.lat, center.lng);
+                const declination = getMagneticDeclination(center.lat, center.lng);
+
+                const doc = new jsPDF({
+                    orientation: pdfOrientation,
+                    unit: 'in',
+                    format: [Math.min(width, height), Math.max(width, height)]
+                });
+
+                const headerHeight = 1.0;
+                const footerHeight = 1.5;
+                const sideMargin = 1.0;
+
+                const availableWidth = width - (2 * sideMargin);
+                const availableHeight = height - headerHeight - footerHeight;
+
+                let gridSquareCm;
+                switch(currentMapScale) {
+                    case 25000: gridSquareCm = 4; break;
+                    case 50000: gridSquareCm = 2; break;
+                    case 100000: gridSquareCm = 1; break;
+                    default: gridSquareCm = 2;
+                }
+
+                const gridSquareInches = gridSquareCm / 2.54;
+
+                const bounds = myMap.getBounds();
+                const centerLL = myMap.getCenter();
+                const zone = Math.floor((centerLL.lng + 180) / 6) + 1;
+                const latBand = getLatitudeBand(centerLL.lat);
+
+                const nw = bounds.getNorthWest();
+                const se = bounds.getSouthEast();
+                const ne = bounds.getNorthEast();
+                const sw = bounds.getSouthWest();
+
+                const nwUTM = latLonToUTM(nw.lat, nw.lng, zone);
+                const seUTM = latLonToUTM(se.lat, se.lng, zone);
+                const neUTM = latLonToUTM(ne.lat, ne.lng, zone);
+                const swUTM = latLonToUTM(sw.lat, sw.lng, zone);
+
+                const gridSize = 1000;
+                const allEastings = [nwUTM.easting, seUTM.easting, neUTM.easting, swUTM.easting];
+                const allNorthings = [nwUTM.northing, seUTM.northing, neUTM.northing, swUTM.northing];
+
+                const minE = Math.floor(Math.min(...allEastings) / gridSize) * gridSize;
+                const maxE = Math.ceil(Math.max(...allEastings) / gridSize) * gridSize;
+                const minN = Math.floor(Math.min(...allNorthings) / gridSize) * gridSize;
+                const maxN = Math.ceil(Math.max(...allNorthings) / gridSize) * gridSize;
+
+                const viewWidthMeters = Math.abs(seUTM.easting - nwUTM.easting);
+                const viewHeightMeters = Math.abs(nwUTM.northing - seUTM.northing);
+
+                const gridSquaresWide = viewWidthMeters / 1000;
+                const gridSquaresTall = viewHeightMeters / 1000;
+
+                const requiredWidth = gridSquaresWide * gridSquareInches;
+                const requiredHeight = gridSquaresTall * gridSquareInches;
+
+                const scaleX = requiredWidth / availableWidth;
+                const scaleY = requiredHeight / availableHeight;
+                const scale = Math.min(scaleX, scaleY);
+
+                let imgWidth = availableWidth * scale;
+                let imgHeight = availableHeight * scale;
+
+                const mapAspect = mapWidth / mapHeight;
+                if (imgWidth / imgHeight > mapAspect) {
+                    imgWidth = imgHeight * mapAspect;
+                } else {
+                    imgHeight = imgWidth / mapAspect;
+                }
+
+                const mapLeft = sideMargin + (availableWidth - imgWidth) / 2;
+                const mapTop = headerHeight + (availableHeight - imgHeight) / 2;
+
+                doc.addImage(dataUrl, 'JPEG', mapLeft, mapTop, imgWidth, imgHeight);
+
+                doc.setDrawColor(102, 102, 102);
+                doc.setLineWidth(0.01);
+                doc.rect(mapLeft, mapTop, imgWidth, imgHeight);
+
+                doc.setFontSize(8);
+                doc.setFont('courier', 'bold');
+                doc.setTextColor(50, 50, 50);
+
+                const pxToInchX = imgWidth / mapWidth;
+                const pxToInchY = imgHeight / mapHeight;
+
+                for (let e = minE; e <= maxE; e += gridSize) {
+                    const coords = utmToLatLon(e, maxN, zone, latBand);
+                    const point = myMap.latLngToContainerPoint([coords.lat, coords.lon]);
+                    const xPos = mapLeft + (point.x * pxToInchX);
+                    const mgrsCoord = latLonToMGRS(coords.lat, coords.lon);
+                    const parts = mgrsCoord.split(' ');
+                    const label = parts[2].substring(0, 2);
+
+                    doc.text(label, xPos, mapTop - 0.1, { align: 'center' });
+                }
+
+                for (let e = minE; e <= maxE; e += gridSize) {
+                    const coords = utmToLatLon(e, minN, zone, latBand);
+                    const point = myMap.latLngToContainerPoint([coords.lat, coords.lon]);
+                    const xPos = mapLeft + (point.x * pxToInchX);
+                    const mgrsCoord = latLonToMGRS(coords.lat, coords.lon);
+                    const parts = mgrsCoord.split(' ');
+                    const label = parts[2].substring(0, 2);
+
+                    doc.text(label, xPos, mapTop + imgHeight + 0.2, { align: 'center' });
+                }
+
+                for (let n = minN; n <= maxN; n += gridSize) {
+                    const coords = utmToLatLon(minE, n, zone, latBand);
+                    const point = myMap.latLngToContainerPoint([coords.lat, coords.lon]);
+                    const yPos = mapTop + (point.y * pxToInchY);
+                    const mgrsCoord = latLonToMGRS(coords.lat, coords.lon);
+                    const parts = mgrsCoord.split(' ');
+                    const label = parts[3].substring(0, 2);
+
+                    doc.text(label, mapLeft - 0.15, yPos + 0.03, { align: 'right' });
+                }
+
+                for (let n = minN; n <= maxN; n += gridSize) {
+                    const coords = utmToLatLon(maxE, n, zone, latBand);
+                    const point = myMap.latLngToContainerPoint([coords.lat, coords.lon]);
+                    const yPos = mapTop + (point.y * pxToInchY);
+                    const mgrsCoord = latLonToMGRS(coords.lat, coords.lon);
+                    const parts = mgrsCoord.split(' ');
+                    const label = parts[3].substring(0, 2);
+
+                    doc.text(label, mapLeft + imgWidth + 0.15, yPos + 0.03, { align: 'left' });
+                }
+
+                doc.setFontSize(16);
+                doc.setFont('helvetica', 'bold');
+                doc.setTextColor(0, 0, 0);
+                doc.text(`MGRS Map - ${mgrs}`, width / 2, 0.4, { align: 'center' });
+
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(10);
+                const scaleText = `Scale: 1:${currentMapScale.toLocaleString()} (1km = ${gridSquareCm}cm)`;
+                const datumText = 'Datum: WGS84';
+                const coordText = `Center: ${center.lat.toFixed(5)}, ${center.lng.toFixed(5)}`;
+                const dateText = `Date: ${new Date().toLocaleDateString()}`;
+                const declinationText = `Mag. Decl: ${declination}° ${parseFloat(declination) >= 0 ? 'E' : 'W'}`;
+
+                const footerY = height - 0.4;
+                doc.text(scaleText, sideMargin, footerY);
+                doc.text(datumText, sideMargin, footerY + 0.15);
+                doc.text(coordText, sideMargin + 2.5, footerY);
+                doc.text(dateText, width - sideMargin - 1.5, footerY, { align: 'right' });
+                doc.text(declinationText, width - sideMargin - 1.5, footerY + 0.15, { align: 'right' });
+
+                doc.setFontSize(9);
+                doc.text('Grid North ^', width / 2, footerY + 0.08, { align: 'center' });
+
+                doc.setFontSize(7);
+                const mapType = document.querySelector('input[name="mapType"]:checked').value;
+                const source = mapType === 'satellite' ? 'Esri World Imagery' : 'OpenTopoMap';
+                doc.text(`Map Source: ${source} | MGRS Grid: 1km squares`, sideMargin, height - 0.15);
+
+                if (mapType === 'terrain') {
+                    doc.setFontSize(6);
+                    const legendX = width - sideMargin - 3;
+                    const legendY = height - 1.2;
+
+                    doc.setTextColor(100, 100, 100);
+                    doc.text('Legend:', legendX, legendY);
+
+                    doc.setDrawColor(139, 69, 19);
+                    doc.setLineWidth(0.005);
+                    doc.line(legendX, legendY + 0.1, legendX + 0.2, legendY + 0.1);
+                    doc.text('Contours', legendX + 0.25, legendY + 0.12);
+
+                    doc.setFillColor(173, 216, 230);
+                    doc.rect(legendX, legendY + 0.18, 0.08, 0.08, 'F');
+                    doc.text('Water', legendX + 0.25, legendY + 0.24);
+
+                    doc.setFillColor(144, 238, 144);
+                    doc.rect(legendX, legendY + 0.32, 0.08, 0.08, 'F');
+                    doc.text('Vegetation', legendX + 0.25, legendY + 0.38);
+
+                    doc.setTextColor(50, 50, 50);
+                }
+
+                doc.save(`GridLoc_${mgrs.replace(/\s/g, '_')}_${Date.now()}.pdf`);
+
+                alert('PDF generated successfully!');
+            } catch (error) {
+                console.error('PDF generation error:', error);
+                alert(`Error generating PDF: ${error.message}\n\nPlease try the following:\n- Refresh the page\n- Try a different zoom level\n- Check your internet connection`);
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initMap);
+        } else {
+            initMap();
+        }
+    </script>
+</body>
+</html>
