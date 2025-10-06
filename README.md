@@ -39,12 +39,6 @@ GridLoc is a web-based Progressive Web App (PWA) that provides Military Grid Ref
 2. Host on any HTTPS-enabled web server
 3. No build process or dependencies required
 
-**Recommended free hosting:**
-- GitHub Pages
-- Netlify
-- Vercel
-- Cloudflare Pages
-
 ## Usage
 
 ### Basic Workflow
